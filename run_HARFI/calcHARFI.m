@@ -1,4 +1,4 @@
-function [] = calcHARFI(DIRnii, DIRmask, R, discrete, DIRout, tr, N)
+function [] = calcHARFI(DIRnii, DIRmask, R, discrete, DIRout, tr, N, NIfTI_path, SPM12_path)
 % runs HARFI on resting state fMRI data
 % 
 % Inputs
@@ -18,14 +18,16 @@ function [] = calcHARFI(DIRnii, DIRmask, R, discrete, DIRout, tr, N)
 %
 % Written by Kurt Schilling - 01/2018 - kurt.g.schilling.1@vanderbilt.edu
 
-%addpath('/Volumes/schillkg/MATLAB/spm12/');
-%addpath('/Volumes/schillkg/MATLAB/NIFTI_20130306/');
+addpath( NIfTI_path );
+addpath( SPM12_path );
 
 % open FMRI
+% fmri = niftiread(DIRnii); 
 nii = load_untouch_nii(DIRnii); fmri = single(nii.img);
 sz = size(fmri); aa = sz(1); bb = sz(2); cc = sz(3); dd= sz(4); nvols = sz(4);
 
 % open mask
+% mask = niftiread(DIRmask);
 nii2 = load_untouch_nii(DIRmask); mask = single(nii2.img);
 
 % mask
@@ -46,15 +48,15 @@ figure(3); plot(timepts, sum4d(1:nvols),'b'); xlabel('time [s]');
 %print('-dpng', '-r100', 'globalts.png');
 
 % Detrend
-disp('Detrending...')
+% disp('Detrending...')
 gmwm_msk = mask; gmwm_ind = find(gmwm_msk>0);
 [rows, cols, vols] = ind2sub(sz(1:3), gmwm_ind);
-for nn = 1:length(rows) % per valid voxel
-    row = rows(nn); col = cols(nn); vol = vols(nn); % voxel coord
-    ts_vox = squeeze(fmri(row,col,vol,:));
-    % fmri(row,col,vol,:) = detrendnonlin(ts_vox); % nonlinear detrend
-    fmri(row,col,vol,:) = detrend(ts_vox); % linear detrend
-end
+% for nn = 1:length(rows) % per valid voxel
+%     row = rows(nn); col = cols(nn); vol = vols(nn); % voxel coord
+%     ts_vox = squeeze(fmri(row,col,vol,:));
+%     % fmri(row,col,vol,:) = detrendnonlin(ts_vox); % nonlinear detrend
+%     fmri(row,col,vol,:) = detrend(ts_vox); % linear detrend
+% end
 
 % plot global signal
 sum4d = squeeze(sum(sum(sum(fmri,1),2),3));

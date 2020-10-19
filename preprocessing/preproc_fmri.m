@@ -29,8 +29,18 @@ DISP = 1;
 if length(varargin)>=3
     volreg_mats = varargin{3};
 end
-if length(varargin)==4
+if length(varargin)>=4
     DISP = varargin{4};
+end
+
+if length(varargin)>=5
+    mkdir_f = varargin{5};
+else
+    mkdir_f = 1;
+end
+
+if length(varargin)>=6
+    motpar_fn = varargin{6};
 end
 
 % ------------------------------------------------------ %
@@ -39,9 +49,15 @@ end
 [fp,fn,ext] = fileparts(dset_fn);
 % make output dir
 % each scan will have its own dir in "func/proc"
-out_dir = [fp,'/proc/',fn,'/']; 
-if ~exist(out_dir,'dir'); mkdir(out_dir); end;
-dset_base = [out_dir,fn];
+if mkdir_f
+    out_dir = [fp,'/proc/',fn,'/']; 
+    if ~exist(out_dir,'dir'); mkdir(out_dir); end
+    dset_base = [out_dir,fn];
+else
+    out_dir = fp;
+    dset_base = [fp,'/',fn];
+end 
+
 
 display(['*********************************************']);
 display(['input file: ',dset_fn]);

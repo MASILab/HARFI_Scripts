@@ -1,4 +1,4 @@
-function [] = preproc_anat_SG(anat_fn)
+function [] = preproc_anat_SG(anat_fn, MNI_T1_template)
 % function [] = preproc_anat(anat_fn)
 % pre-process T1 image: performs skull-strip (via BET) and
 
@@ -7,7 +7,7 @@ function [] = preproc_anat_SG(anat_fn)
 %
 % INPUT: anat_fn: full path to T1 MPRAGE (nii format)
 %% defaults:
-MNI_T1_template = '/home-local/INN_final_project/preproc/MNI152_T1_2mm_brain.nii.gz';
+% MNI_T1_template = '/home-local/INN_final_project/preproc/MNI152_T1_2mm_brain.nii.gz';
 
 
 [fp,fn,ext] = fileparts(anat_fn);

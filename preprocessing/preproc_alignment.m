@@ -1,4 +1,4 @@
-function [] = preproc_alignment_SG(epi_dset_fn,T1_reg_dir,DISP)
+function [] = preproc_alignment_SG(epi_dset_fn,T1_reg_dir,DISP, MNI_T1_template)
 % calculates alignment EPI -> T1 , T1 -> MNI, and EPI -> MNI
 %
 % inputs:
@@ -11,7 +11,7 @@ function [] = preproc_alignment_SG(epi_dset_fn,T1_reg_dir,DISP)
 % ------------------------------------------------------ %
 % setup
 % ------------------------------------------------------ %
-MNI_T1_template = '/home-local/INN_final_project/preproc/MNI152_T1_2mm_brain.nii.gz';
+
 assert(exist(MNI_T1_template)~=0);
 
 % check input files
